@@ -145,19 +145,41 @@ function NewsList({ searchQuery, selectedCategory }) {
 
         <div className="trending-list">
 
-          <div className="trending-item">
+          <div className="trending-item"
+            onClick={() =>
+              navigate('/article', {
+                state: { article: articles[0] },
+              })
+            }
+          >
             <span>01</span>
-            <h3>Latest stories making headlines today</h3>
+            <h3>{articles[0]?.title}</h3>
+
           </div>
 
-          <div className="trending-item">
+          <div className="trending-item"
+            onClick={() =>
+              navigate('/article', {
+                state: { article: articles[1] },
+              })
+            }
+          >
             <span>02</span>
-            <h3>Important updates from around the world</h3>
+            <h3>{articles[1]?.title}</h3>
+
           </div>
 
-          <div className="trending-item">
+          <div className="trending-item"
+            onClick={() =>
+              navigate('/article', {
+                state: { article: articles[2] },
+              })
+            }
+          >
             <span>03</span>
-            <h3>Technology and business news you should know</h3>
+            <h3>{articles[2]?.title}</h3>
+
+
           </div>
 
         </div>
