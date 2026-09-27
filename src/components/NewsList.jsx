@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getTopHeadlines, searchNews } from '../services/newsApi'
+import { getTopHeadlines, searchNews, searchCategoryNews, } from '../services/newsApi'
 import NewsItem from './NewsItem'
 
-function NewsList({ searchQuery }) {
+function NewsList({ searchQuery, selectedCategory }) {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -13,10 +13,15 @@ function NewsList({ searchQuery }) {
         setLoading(true)
         setError('')
 
-        const data = searchQuery.trim()
-        ? await searchNews(searchQuery.trim())
-        : await getTopHeadlines()
+        let data
 
+        if (searchQuery.trim()) {
+          data = await searchNews(searchQuery.trim())
+        } else if (selectedCategory !== 'All') {
+          data = await searchCategoryNews(selectedCategory)
+        } else {
+          data = await getTopHeadlines()
+        }
         setArticles(data)
       } catch (error) {
         console.error(error)
@@ -27,7 +32,7 @@ function NewsList({ searchQuery }) {
     }
 
     fetchNews()
-  }, [searchQuery])
+  }, [searchQuery, selectedCategory])
 
   return (
     <main>

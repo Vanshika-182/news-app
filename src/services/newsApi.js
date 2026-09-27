@@ -32,3 +32,15 @@ export const searchNews = async (query) => {
 
   return response.data.articles
 }
+export const searchCategoryNews = async (category) => {
+  const response = await newsApi.get('/everything', {
+    params: {
+      q: category,
+      language: 'en',
+      sortBy: 'publishedAt',
+      pageSize: 20,
+    },
+  })
+
+  return response.data.articles
+}

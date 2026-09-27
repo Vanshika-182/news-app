@@ -1,8 +1,10 @@
 import { useState } from 'react'
-function Header({ searchQuery, setSearchQuery, setSearchTerm }) {
+function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
+  setSelectedCategory, }) {
   const [showSuggestions, setShowSuggestions] = useState(false)
 
   const suggestions = [
+    'All',
     'India',
     'World',
     'Technology',
@@ -61,66 +63,45 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm }) {
               onClick={handleSearch}>🔍
 
             </button>
-            { showSuggestions &&
-            searchQuery && filteredSuggestions.length > 0 && (
-              <div className="search-suggestions">
+            {showSuggestions &&
+              searchQuery && filteredSuggestions.length > 0 && (
+                <div className="search-suggestions">
 
-                {filteredSuggestions.map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    type="button"
-                    onClick={() => handleSuggestionClick(suggestion)}
-                  >
-                    {suggestion}
-                  </button>
-                ))}
+                  {filteredSuggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
 
-               </div>
-            )}
+                </div>
+              )}
 
           </div>
-       </div>
+        </div>
       </header>
 
 
       <nav className="category-bar">
         <div className="category-container">
 
-          <button className="category active">
-            All
-          </button>
-
-          <button className="category">
-            India
-          </button>
-
-          <button className="category">
-            World
-          </button>
-
-          <button className="category">
-            Technology
-          </button>
-
-          <button className="category">
-            Business
-          </button>
-
-          <button className="category">
-            Sports
-          </button>
-
-          <button className="category">
-            Entertainment
-          </button>
-
-          <button className="category">
-            Science
-          </button>
-
-          <button className="category">
-            Health
-          </button>
+          {suggestions.map((category) => (
+            <button
+              key={category}
+              className={`category ${selectedCategory === category ? 'active' : ''
+                }`}
+              onClick={() => {
+                setSelectedCategory(category)
+                setSearchQuery('')
+                setSearchTerm('')
+              }}
+            >
+              {category}
+            </button>
+          ))}
 
         </div>
       </nav>
