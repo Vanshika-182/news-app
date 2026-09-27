@@ -4,7 +4,7 @@
 
 .app {
   min-height: 100vh;
-  background: #f7f8fa;
+  background: #fff9e8;
 }
 
 
@@ -13,8 +13,8 @@
 ================================ */
 
 .main-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e6e8eb;
+  background: #0b1f3a;
+  border-bottom: 1px solid #16365f;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -39,7 +39,7 @@
   align-items: center;
   gap: 10px;
 
-  color: #111827;
+  color: #ffffff;
 
   font-size: 26px;
   font-weight: 800;
@@ -47,6 +47,9 @@
   letter-spacing: -0.7px;
 
   white-space: nowrap;
+}
+.logo-highlight {
+  color: #7dd3fc;
 }
 
 .logo-icon {
@@ -64,12 +67,12 @@
 
   width: 300px;
 
-  background: #f5f6f8;
+  background: #ffffff;
 
-  border: 1px solid #e1e4e8;
+  border: 1px solid #d8dee8;
 
-  border-radius: 8px;
-
+  border-radius: 12px;
+  overflow: hidden;
   transition: 0.2s ease;
 }
 
@@ -94,11 +97,13 @@
   background: #2563eb;
 
   color: white;
-
-  padding: 12px 15px;
-
+  height: 42px;
+  width: 46px;
+  display: flex;
+  align-items: center;
   font-size: 16px;
-
+  justify-content: center;
+  transition: 0.2s ease;
   cursor: pointer;
 }
 
@@ -209,7 +214,7 @@
 .category-bar {
   background: #ffffff;
 
-  border-bottom: 1px solid #e6e8eb;
+  border-bottom: 1px solid rgb(238, 243, 163);
 }
 
 .category-container {
@@ -617,11 +622,12 @@
   border-radius: 10px;
 
   transition: 0.2s ease;
+  cursor: pointer;
 }
 
 .trending-item:hover {
   transform: translateY(-3px);
-
+  border-color: #2563eb;
   box-shadow:
     0 10px 25px rgba(15, 23, 42, 0.07);
 }

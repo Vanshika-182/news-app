@@ -36,7 +36,9 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
 
           <div className="logo">
             <span className="logo-icon">📰</span>
-            <span>NewsHub</span>
+            <span>News
+            <span className='logo-highlight'>H</span>ub
+            </span>
           </div>
 
           <div className="search-box">
