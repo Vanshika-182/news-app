@@ -1,39 +1,45 @@
-function NewsItem() {
+function NewsItem({ article }) {
   return (
     <article className="news-card">
 
       <div className="news-image">
         <img
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80"
-          alt="News"
+          src={
+            article.urlToImage ||
+            'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'
+          }
+          alt={article.title}
         />
       </div>
 
       <div className="news-content">
 
         <span className="news-category">
-          TECHNOLOGY
+          {article.source?.name || 'NEWS'}
         </span>
 
         <h3>
-          Latest Technology News and Updates
+          {article.title}
         </h3>
 
         <p>
-          Stay updated with the latest developments,
-          innovations and important technology stories
-          from around the world.
+          {article.description || 'Read the latest news and updates.'}
         </p>
 
         <div className="news-footer">
 
           <span className="date">
-            September 27, 2026
+            {new Date(article.publishedAt).toLocaleDateString()}
           </span>
 
-          <button className="read-more">
+          <a
+            className="read-more"
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Read More →
-          </button>
+          </a>
 
         </div>
 

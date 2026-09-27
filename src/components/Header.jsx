@@ -1,4 +1,32 @@
-function Header() {
+import { useState } from 'react'
+function Header({ searchQuery, setSearchQuery, setSearchTerm }) {
+  const [showSuggestions, setShowSuggestions] = useState(false)
+
+  const suggestions = [
+    'India',
+    'World',
+    'Technology',
+    'Business',
+    'Sports',
+    'Entertainment',
+    'Science',
+    'Health',
+  ]
+
+  const filteredSuggestions = suggestions.filter((item) =>
+    item.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  const handleSearch = () => {
+    setSearchTerm(searchQuery)
+    setShowSuggestions(false)
+  }
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion)
+    setSearchTerm(suggestion)
+    setShowSuggestions(false)
+  }
+
   return (
     <>
       <header className="main-header">
@@ -13,11 +41,45 @@ function Header() {
             <input
               type="text"
               placeholder="Search news..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value)
+                setShowSuggestions(true)
+              }}
+              onFocus={() => {
+                if (searchQuery) {
+                  setShowSuggestions(true)
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch()
+                }
+              }}
             />
-            <button>🔍</button>
-          </div>
+            <button className="search-button"
+              onClick={handleSearch}>🔍
 
-        </div>
+            </button>
+            { showSuggestions &&
+            searchQuery && filteredSuggestions.length > 0 && (
+              <div className="search-suggestions">
+
+                {filteredSuggestions.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+
+               </div>
+            )}
+
+          </div>
+       </div>
       </header>
 
 

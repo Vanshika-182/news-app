@@ -1,6 +1,34 @@
+import { useEffect, useState } from 'react'
+import { getTopHeadlines, searchNews } from '../services/newsApi'
 import NewsItem from './NewsItem'
 
-function NewsList() {
+function NewsList({ searchQuery }) {
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        setLoading(true)
+        setError('')
+
+        const data = searchQuery.trim()
+        ? await searchNews(searchQuery.trim())
+        : await getTopHeadlines()
+
+        setArticles(data)
+      } catch (error) {
+        console.error(error)
+        setError('Unable to load news right now.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchNews()
+  }, [searchQuery])
+
   return (
     <main>
 
@@ -53,14 +81,28 @@ function NewsList() {
         </div>
 
 
-        <div className="news-grid">
+        {loading && (
+          <p>Loading latest news...</p>
+        )}
 
-          <NewsItem />
-          <NewsItem />
-          <NewsItem />
-          <NewsItem />
 
-        </div>
+        {error && (
+          <p>{error}</p>
+        )}
+
+
+        {!loading && !error && (
+          <div className="news-grid">
+
+            {articles.map((article, index) => (
+              <NewsItem
+                key={article.url || index}
+                article={article}
+              />
+            ))}
+
+          </div>
+        )}
 
       </section>
 
