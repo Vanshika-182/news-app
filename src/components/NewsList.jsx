@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getTopHeadlines, searchNews, searchCategoryNews, } from '../services/newsApi'
 import NewsItem from './NewsItem'
+import { useNavigate } from 'react-router-dom'
 
 function NewsList({ searchQuery, selectedCategory }) {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [featuredArticle, setFeaturedArticle] = useState(null)
+  const [showAll, setShowAll] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -23,6 +27,7 @@ function NewsList({ searchQuery, selectedCategory }) {
           data = await getTopHeadlines()
         }
         setArticles(data)
+        setFeaturedArticle(data[0] || null)
       } catch (error) {
         console.error(error)
         setError('Unable to load news right now.')
@@ -46,20 +51,29 @@ function NewsList({ searchQuery, selectedCategory }) {
             FEATURED STORY
           </span>
 
-          <h1>
-            Stay Updated With
-            <br />
-            The Latest News
-          </h1>
+          {featuredArticle && (
+            <>
+              <h1>
+                {featuredArticle.title}
+              </h1>
 
-          <p>
-            Get the latest stories, updates and important
-            news from around the world in one place.
-          </p>
+              <p>
+                {featuredArticle.description ||
+                  'Read the latest news and updates.'}
+              </p>
 
-          <button className="explore-btn">
-            Read Featured Story →
-          </button>
+              <button
+                className="explore-btn"
+                onClick={() =>
+                  navigate('/article', {
+                    state: { article: featuredArticle },
+                  })
+                }
+              >
+                Read Featured Story →
+              </button>
+            </>
+          )}
 
         </div>
 
@@ -79,8 +93,10 @@ function NewsList({ searchQuery, selectedCategory }) {
             <h2>Latest News</h2>
           </div>
 
-          <button className="view-all">
-            View All →
+          <button className="view-all"
+            onClick={() => setShowAll(!showAll)}
+          >
+            {showAll ? 'Show Less ↑' : 'View All →'}
           </button>
 
         </div>
@@ -99,7 +115,7 @@ function NewsList({ searchQuery, selectedCategory }) {
         {!loading && !error && (
           <div className="news-grid">
 
-            {articles.map((article, index) => (
+            {(showAll ? articles : articles.slice(0, 6)).map((article, index) => (
               <NewsItem
                 key={article.url || index}
                 article={article}
