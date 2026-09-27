@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom'
 function NewsItem({ article }) {
+  const navigate = useNavigate()
   return (
     <article className="news-card">
 
@@ -31,15 +33,13 @@ function NewsItem({ article }) {
           <span className="date">
             {new Date(article.publishedAt).toLocaleDateString()}
           </span>
-
-          <a
+          <button
             className="read-more"
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => navigate('/article', { state: { article } })}
           >
             Read More →
-          </a>
+          </button>
+
 
         </div>
 
