@@ -41,7 +41,28 @@ function NewsList({ searchQuery, selectedCategory }) {
 
   return (
     <main>
+      {/* Breaking News Ticker */}
+      {!loading && !error && articles.length > 0 && (
+        <section className="breaking-ticker">
 
+          <div className="breaking-label">
+            ⚡ BREAKING NEWS
+          </div>
+
+          <div className="breaking-track">
+            {articles.slice(0, 6).map((article, index) => (
+              <span
+                className="breaking-headline"
+                key={article.url || index}
+              >
+                {article.title}
+                <span className="ticker-separator">•</span>
+              </span>
+            ))}
+          </div>
+
+        </section>
+      )}
       {/* Featured Story */}
       <section className="hero-section" id="home">
 

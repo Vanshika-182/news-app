@@ -2,6 +2,7 @@ import { useState } from 'react'
 function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
   setSelectedCategory, }) {
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const suggestions = [
     'All',
@@ -37,9 +38,16 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
           <div className="logo">
             <span className="logo-icon">📰</span>
             <span>News
-            <span className='logo-highlight'>H</span>ub
+              <span className='logo-highlight'>H</span>ub
             </span>
           </div>
+          <button
+            className="hamburger-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
 
           <div className="search-box">
             <input
@@ -49,6 +57,12 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
               onChange={(e) => {
                 setSearchQuery(e.target.value)
                 setShowSuggestions(true)
+                console.log(
+                  'Typing:',
+                  e.target.value,
+                  'Suggestions:',
+                  filteredSuggestions
+                )
               }}
               onFocus={() => {
                 if (searchQuery) {
@@ -67,7 +81,8 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
             </button>
             {showSuggestions &&
               searchQuery && filteredSuggestions.length > 0 && (
-                <div className="search-suggestions">
+                <div className="search-suggestions"
+                  style={{ display: 'block', background: 'white', color: 'black' }}>
 
                   {filteredSuggestions.map((suggestion) => (
                     <button
@@ -87,7 +102,7 @@ function Header({ searchQuery, setSearchQuery, setSearchTerm, selectedCategory,
       </header>
 
 
-      <nav className="category-bar">
+      <nav className={`category-bar ${menuOpen ? 'menu-open' : ''}`}>
         <div className="category-container">
 
           {suggestions.map((category) => (
