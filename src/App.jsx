@@ -12,7 +12,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   return (
-  <BrowserRouter>
+  <BrowserRouter basename='/news-app'>
     <div className="app">
       <Routes>
         <Route
