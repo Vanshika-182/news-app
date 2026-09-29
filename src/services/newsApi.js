@@ -11,10 +11,13 @@ const newsApi = axios.create({
 })
 
 export const getTopHeadlines = async () => {
-  const response = await newsApi.get('/top-headlines', {
+  const response = await newsApi.get('/everything', {
     params: {
-      country: 'us',
-    }
+      q: 'India',
+      language: 'en',
+      sortBy: 'publishedAt',
+      pageSize: 20,
+    },
   })
 
   return response.data.articles
